@@ -1,16 +1,11 @@
 ﻿@model IEnumerable<Genre>
-@{
-    ViewData["Title"] = "ChangeGenre";
-}
-
-
 
 <div class="row">
     <div class="col-lg-10">
         <h1>Genre Table</h1>
     </div>
     <div class="col-lg-2">
-        <a class="btn btn-primary" asp-action="Create">Create Product</a>
+        <a class="btn btn-primary"asp-controller="Product" asp-action="CreateGenre">Create Genre</a>
     </div>
 </div>
 <div class="row">
@@ -18,22 +13,15 @@
         <table class="table table-striped">
             <thead>
                 <tr>
+                    <th >#</th>
                     <th >Name</th>
+
                 </tr>
             </thead>
-            <tbody id="AuthorTable">
-                @foreach (Genre genres in Model)
-               {
-                          <tr>
-                   <td>
-                       @genres.Name
-                   </td>
-               </tr>
-               }
-        
+            <tbody id="GenreTable">
+                @await Html.PartialAsync("_GenreTablePartial",Model) 
             </tbody>
         </table>
     </div>
 
 </div>
-

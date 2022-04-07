@@ -30,8 +30,8 @@ namespace Pustok.Areas.Manage.Controllers
         public async Task<IActionResult> Index()
         {
             IEnumerable<Product> products = await _context.Products
-                .Where(p=>!p.IsDeleted)
-                .OrderByDescending(p=>p.Id)
+                .Where(p => !p.IsDeleted)
+                .OrderByDescending(p => p.Id)
                 .Take(5)
                 .ToListAsync();
 
@@ -45,7 +45,7 @@ namespace Pustok.Areas.Manage.Controllers
             Product product = await _context.Products
                 .Include(p => p.Author)
                 .Include(p => p.Genre)
-                .FirstOrDefaultAsync(p=>p.Id == id && !p.IsDeleted);
+                .FirstOrDefaultAsync(p => p.Id == id && !p.IsDeleted);
 
             if (product == null) return NotFound();
 
@@ -120,7 +120,7 @@ namespace Pustok.Areas.Manage.Controllers
                 return View();
             }
 
-            product.MainImage  = await product.MainImgFile.FileCreateAsync(_env, "image", "products");
+            product.MainImage = await product.MainImgFile.FileCreateAsync(_env, "image", "products");
             product.HoverImage = await product.HoverImgFile.FileCreateAsync(_env, "image", "products"); ;
             product.CreatedAt = DateTime.UtcNow.AddHours(4);
 
@@ -192,7 +192,7 @@ namespace Pustok.Areas.Manage.Controllers
 
                 Helper.DeleteFile(_env, dbProduct.MainImage, "image", "products");
 
-                product.MainImage  = await product.MainImgFile.FileCreateAsync(_env, "image", "products");
+                product.MainImage = await product.MainImgFile.FileCreateAsync(_env, "image", "products");
             }
 
             if (product.HoverImgFile != null)
@@ -271,13 +271,48 @@ namespace Pustok.Areas.Manage.Controllers
         }
         public async Task<IActionResult> ChangeAuthor()
         {
-            IEnumerable<Author>authors=await _context.Authors.ToListAsync();
+            IEnumerable<Author> authors = await _context.Authors.ToListAsync();
             return View(authors);
+        }
+        public async Task<IActionResult> CreateAuthor()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateAuthor(Author author)
+        {
+            Author authors = new Author()
+            {
+                Name = author.Name
+            };
+            _context.Authors.Add(authors);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(ChangeAuthor));
         }
         public async Task<IActionResult> ChangeGenre()
         {
             IEnumerable<Genre> genres = await _context.Genres.ToListAsync();
             return View(genres);
+
+        }
+        public async Task<IActionResult> CreateGenre()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateGenre(Genre genre)
+        {
+            Genre genres = new Genre()
+            {
+                Name=genre.Name
+            };
+            _context.Genres.Add(genres);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(ChangeGenre));
+
+
         }
     }
 }

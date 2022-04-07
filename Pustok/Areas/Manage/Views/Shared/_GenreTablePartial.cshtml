@@ -1,0 +1,19 @@
+﻿@model IEnumerable<Genre>
+@{
+    int count = 0;
+}
+
+@foreach (Genre Genres in Model)
+{
+    count++;
+    <tr>
+        <th>@count</th>
+        <td>@Genres.Name</td>
+
+        <td>
+            <a asp-action="Detail" asp-route-id="@Genres.Id" class="btn btn-success">Detail</a>
+            <a asp-action="Update" asp-route-id="@Genres.Id" class="btn btn-warning">Update</a>
+            <a asp-action="DeleteProduct" asp-route-id="@Genres.Id" class="btn btn-danger" id="deletefilesweet">Delete</a>
+        </td>
+    </tr>
+}

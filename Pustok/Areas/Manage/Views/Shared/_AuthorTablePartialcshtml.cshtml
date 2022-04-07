@@ -1,0 +1,19 @@
+﻿@model IEnumerable<Author>
+@{
+    int count = 0;
+}
+
+@foreach (Author authors in Model)
+{
+    count++;
+    <tr>
+        <th>@count</th>
+        <td>@authors.Name</td>
+
+        <td>
+            <a asp-action="Detail" asp-route-id="@authors.Id" class="btn btn-success">Detail</a>
+            <a asp-action="Update" asp-route-id="@authors.Id" class="btn btn-warning">Update</a>
+            <a asp-action="DeleteProduct" asp-route-id="@authors.Id" class="btn btn-danger" id="deletefilesweet">Delete</a>
+        </td>
+    </tr>
+}
