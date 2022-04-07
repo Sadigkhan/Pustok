@@ -282,6 +282,16 @@ namespace Pustok.Areas.Manage.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateAuthor(Author author)
         {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            Author Exs = _context.Authors.FirstOrDefault(a => a.Name.ToLower().Trim() == author.Name.ToLower().Trim());
+            if (Exs != null)
+            {
+                ModelState.AddModelError("", $"{author.Name} is alrady Exsist");
+                return View();
+            }
             Author authors = new Author()
             {
                 Name = author.Name
@@ -304,10 +314,22 @@ namespace Pustok.Areas.Manage.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateGenre(Genre genre)
         {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            Genre Exs = _context.Genres.FirstOrDefault(g => g.Name.ToLower().Trim() == genre.Name.ToLower().Trim());
+            if (Exs != null)
+            { ModelState.AddModelError("", $"{genre.Name} is alrady Exsist");
+                return View();
+            }
             Genre genres = new Genre()
             {
-                Name=genre.Name
+                Name = genre.Name
+
             };
+
+
             _context.Genres.Add(genres);
             _context.SaveChanges();
             return RedirectToAction(nameof(ChangeGenre));

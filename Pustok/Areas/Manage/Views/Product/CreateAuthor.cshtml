@@ -8,7 +8,9 @@
 <div class="container-fluid">
     <div class="row">
         <form method="post">
+            <div class="alert alert-danger" asp-validation-summary="ModelOnly"></div>
             <input asp-for="Name" type="text"/> <button type="submit">Submit</button>
+            <span class="text text-danger" asp-validation-for="Name"></span>
 
         </form>
     </div>
