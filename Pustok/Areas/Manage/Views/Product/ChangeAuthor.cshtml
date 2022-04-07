@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Author>
+@{
+    ViewData["Title"] = "ChangeAuthor";
+}
+
+
+
+<div class="row">
+    <div class="col-lg-10">
+        <h1>Author Table</h1>
+    </div>
+    <div class="col-lg-2">
+        <a class="btn btn-primary" asp-action="Create">Create Product</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th >Name</th>
+                </tr>
+            </thead>
+            <tbody id="AuthorTable">
+                @foreach (Author authors in Model)
+               {
+                          <tr>
+                   <td>
+                       @authors.Name
+                   </td>
+               </tr>
+               }
+        
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
